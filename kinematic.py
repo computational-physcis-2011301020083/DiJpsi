@@ -3,14 +3,15 @@ from array import array
 import argparse
 parser = argparse.ArgumentParser(description="%prog [options]", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--path", dest='path',  default="", help="path")
+parser.add_argument("--path1", dest='path1',  default="", help="path1")
 args = parser.parse_args()
 
 
 pi=ROOT.TMath.Pi()
-path="./root/"
-paths=glob.glob(path+"*root")
+path="./"+args.path1+"/"
+paths=glob.glob(path+"*data*root")
 rootpath=paths[int(args.path)]
-outpath="./hist/"+rootpath.split("/")[-1].split(".")[0]+"_km.root"
+outpath=rootpath.replace("data","km")
 print(outpath)
 
 hx=ROOT.TH1F("x_mass","x_mass",200,0,20)

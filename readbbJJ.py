@@ -3,13 +3,15 @@ from array import array
 import argparse
 parser = argparse.ArgumentParser(description="%prog [options]", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--path", dest='path',  default="", help="path")
+parser.add_argument("--path1", dest='path1',  default="", help="path1")
 args = parser.parse_args()
 
-path="./bbJJMerge/"
+path="./"+args.path1+"/"
 paths=glob.glob(path+"*txt")
 fpath=paths[int(args.path)]
 f=open(fpath,"r")
 outpath=path+fpath.split("/")[-2]+"_"+fpath.split("/")[-1].split(".")[0]+".root"
+print(outpath)
 
 file1 = ROOT.TFile(outpath, 'recreate')
 tree = ROOT.TTree("nominal", "Truth info for bbJJ")
@@ -35,6 +37,8 @@ tree.Branch("muon_4", muon_4, 'muon_4[4]/F')
 lines=f.readlines()
 L=int(len(lines)/7)
 for j in range(L):
+        #if j%100==0:
+        #    print(j)
         count=j*7
         e=float(lines[count].split(" ")[1])
         j1=[float(k) for k in lines[count+1].split(" ")]

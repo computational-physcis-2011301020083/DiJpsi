@@ -3,12 +3,13 @@ from array import array
 import argparse
 parser = argparse.ArgumentParser(description="%prog [options]", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--path", dest='path',  default="", help="path")
+parser.add_argument("--path1", dest='path1',  default="", help="path1")
 args = parser.parse_args()
 
-path="./root/"
-paths=glob.glob(path+"*root")
+path="./"+args.path1+"/"
+paths=glob.glob(path+"*data*root")
 rootpath=paths[int(args.path)]
-outpath=rootpath.replace("/root","/hist")
+outpath=rootpath.replace("data","angle")
 print(outpath)
 
 h1=ROOT.TH1F("theta_x","theta_x",200,0,4)

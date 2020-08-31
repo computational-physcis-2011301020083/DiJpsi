@@ -3,6 +3,7 @@ from array import array
 import argparse
 parser = argparse.ArgumentParser(description="%prog [options]", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--path", dest='path',  default="", help="path")
+parser.add_argument("--path1", dest='path1',  default="", help="path1")
 args = parser.parse_args()
 
 def InvariantMass(muon1,muon2):
@@ -14,10 +15,10 @@ def InvariantMass(muon1,muon2):
     Bmass=math.sqrt(abs(Bmeson[0]**2+Bmeson[1]**2+Bmeson[2]**2-Bmeson[3]**2))
     return Bmass
 
-path="./BmumuMerge/"
-paths=glob.glob(path+"*root")
+path="./"+args.path1+"/"
+paths=glob.glob(path+"*data*root")
 rootpath=paths[int(args.path)]
-outpath=rootpath.replace("/BmumuMerge/","/hist/")
+outpath=rootpath.replace("data","angle")
 print(outpath)
 
 h1=ROOT.TH1F("theta_x","theta_x",200,0,4)

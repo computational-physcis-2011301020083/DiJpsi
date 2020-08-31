@@ -3,9 +3,10 @@ from array import array
 import argparse
 parser = argparse.ArgumentParser(description="%prog [options]", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--path", dest='path',  default="", help="path")
+parser.add_argument("--path1", dest='path1',  default="", help="path1")
 args = parser.parse_args()
 
-path="./BmumuMerge/"
+path="./"+args.path1+"/"
 paths=glob.glob(path+"*txt")
 fpath=paths[int(args.path)]
 outpath=path+fpath.split("/")[-2]+"_"+fpath.split("/")[-1].split(".")[0]+".root"
