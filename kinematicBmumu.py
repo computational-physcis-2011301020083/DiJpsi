@@ -6,6 +6,7 @@ parser.add_argument("--path", dest='path',  default="", help="path")
 parser.add_argument("--path1", dest='path1',  default="", help="path1")
 args = parser.parse_args()
 
+
 pi=ROOT.TMath.Pi()
 path="./"+args.path1+"/"
 paths=glob.glob(path+"*data*root")
@@ -53,9 +54,7 @@ for i in range(N):
     #jpsi_1_pt_eta=[jpsi_1.Pt()/1000.0,jpsi_1.Eta()]
     #jpsi_2_pt_eta=[jpsi_2.Pt()/1000.0,jpsi_2.Eta()]
     muon_list=[muon_1_pt_eta,muon_2_pt_eta,muon_3_pt_eta,muon_4_pt_eta]
-    #print(muon_list)
     muon_list=sorted(muon_list)
-    #print(muon_list)
     muon_1_pt=muon_list[3][0]
     muon_2_pt=muon_list[2][0]
     muon_3_pt=muon_list[1][0]
@@ -70,9 +69,10 @@ for i in range(N):
     #jpsi_2_pt=jpsi_list[0][0]
     #jpsi_1_eta=jpsi_list[1][1]
     #jpsi_2_eta=jpsi_list[0][1]
-    
+
     x_mass=(muon_1+muon_2+muon_3+muon_4).M()/1000.0
-    #print(muon_1_pt,muon_2_pt,muon_3_pt,muon_4_pt,x_mass)
+    #x_mass=(jpsi_1+jpsi_2).M()/1000.0
+
     hp1.Fill(muon_1_pt)
     hp2.Fill(muon_2_pt)
     hp3.Fill(muon_3_pt)
@@ -104,15 +104,6 @@ he4.Write(he4.GetName(),ROOT.TObject.kOverwrite)
 #he6.Write(he6.GetName(),ROOT.TObject.kOverwrite)
 outFile.Close()
 f.Close()
-
-
-
-
-
-
-
-
-
 
 
 

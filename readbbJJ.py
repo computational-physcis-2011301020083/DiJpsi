@@ -8,6 +8,7 @@ args = parser.parse_args()
 
 path="./"+args.path1+"/"
 paths=glob.glob(path+"*txt")
+print(paths)
 fpath=paths[int(args.path)]
 f=open(fpath,"r")
 outpath=path+fpath.split("/")[-2]+"_"+fpath.split("/")[-1].split(".")[0]+".root"
