@@ -1,0 +1,147 @@
+import ROOT,glob,math,os
+from array import array
+import argparse
+parser = argparse.ArgumentParser(description="%prog [options]", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument("--path", dest='path',  default="", help="path")
+args = parser.parse_args()
+
+
+h1=ROOT.TH1F("theta_x","theta_x",200,0,4)
+h2=ROOT.TH1F("phi_1","phi_1",200,0,4)
+h3=ROOT.TH1F("phi_2","phi_2",200,0,4)
+h4=ROOT.TH1F("theta_phi_1","theta_phi_1",200,0,4)
+h5=ROOT.TH1F("theta_phi_2","theta_phi_2",200,0,4)
+
+i1=ROOT.TH1F("theta_x_a1","theta_x_a1",200,0,4)
+i2=ROOT.TH1F("phi_1_a1","phi_1_a1",200,0,4)
+i3=ROOT.TH1F("phi_2_a1","phi_2_a1",200,0,4)
+i4=ROOT.TH1F("theta_phi_1_a1","theta_phi_1_a1",200,0,4)
+i5=ROOT.TH1F("theta_phi_2_a1","theta_phi_2_a1",200,0,4)
+
+j1=ROOT.TH1F("theta_x_a2","theta_x_a2",200,0,4)
+j2=ROOT.TH1F("phi_1_a2","phi_1_a2",200,0,4)
+j3=ROOT.TH1F("phi_2_a2","phi_2_a2",200,0,4)
+j4=ROOT.TH1F("theta_phi_1_a2","theta_phi_1_a2",200,0,4)
+j5=ROOT.TH1F("theta_phi_2_a2","theta_phi_2_a2",200,0,4)
+
+k1=ROOT.TH1F("theta_x_a3","theta_x_a3",200,0,4)
+k2=ROOT.TH1F("phi_1_a3","phi_1_a3",200,0,4)
+k3=ROOT.TH1F("phi_2_a3","phi_2_a3",200,0,4)
+k4=ROOT.TH1F("theta_phi_1_a3","theta_phi_1_a3",200,0,4)
+k5=ROOT.TH1F("theta_phi_2_a3","theta_phi_2_a3",200,0,4)
+
+l1=ROOT.TH1F("theta_x_a4","theta_x_a4",200,0,4)
+l2=ROOT.TH1F("phi_1_a4","phi_1_a4",200,0,4)
+l3=ROOT.TH1F("phi_2_a4","phi_2_a4",200,0,4)
+l4=ROOT.TH1F("theta_phi_1_a4","theta_phi_1_a4",200,0,4)
+l5=ROOT.TH1F("theta_phi_2_a4","theta_phi_2_a4",200,0,4)
+
+m1=ROOT.TH1F("theta_x_d1","theta_x_d1",200,0,4)
+m2=ROOT.TH1F("phi_1_d1","phi_1_d1",200,0,4)
+m3=ROOT.TH1F("phi_2_d1","phi_2_d1",200,0,4)
+m4=ROOT.TH1F("theta_phi_1_d1","theta_phi_1_d1",200,0,4)
+m5=ROOT.TH1F("theta_phi_2_d1","theta_phi_2_d1",200,0,4)
+
+n1=ROOT.TH1F("theta_x_e1","theta_x_e1",200,0,4)
+n2=ROOT.TH1F("phi_1_e1","phi_1_e1",200,0,4)
+n3=ROOT.TH1F("phi_2_e1","phi_2_e1",200,0,4)
+n4=ROOT.TH1F("theta_phi_1_e1","theta_phi_1_e1",200,0,4)
+n5=ROOT.TH1F("theta_phi_2_e1","theta_phi_2_e1",200,0,4)
+
+path="./Reduce/"
+paths=sorted(glob.glob(path+"sig*root"))
+rootpath=paths[int(args.path)]
+outpath=rootpath.replace("sig_","hists_")
+print(outpath)
+f=ROOT.TFile(rootpath,"r")
+t=f.Get("nominal")
+N=t.GetEntries()
+for i in range(N):
+    t.GetEntry(i)
+    h1.Fill(t.theta_x)
+    h2.Fill(t.phi_1)
+    h3.Fill(t.phi_2)
+    h4.Fill(t.theta_phi_1)
+    h5.Fill(t.theta_phi_2)
+    if t.mc16a_trigger[0]==1:
+        i1.Fill(t.theta_x)
+        i2.Fill(t.phi_1)
+        i3.Fill(t.phi_2)
+        i4.Fill(t.theta_phi_1)
+        i5.Fill(t.theta_phi_2)
+    if t.mc16a_trigger[1]==1:
+        j1.Fill(t.theta_x)
+        j2.Fill(t.phi_1)
+        j3.Fill(t.phi_2)
+        j4.Fill(t.theta_phi_1)
+        j5.Fill(t.theta_phi_2)
+    if t.mc16a_trigger[2]==1 or t.mc16a_trigger[3]==1:
+        k1.Fill(t.theta_x)
+        k2.Fill(t.phi_1)
+        k3.Fill(t.phi_2)
+        k4.Fill(t.theta_phi_1)
+        k5.Fill(t.theta_phi_2)
+    if t.mc16a_trigger[4]==1:
+        l1.Fill(t.theta_x)
+        l2.Fill(t.phi_1)
+        l3.Fill(t.phi_2)
+        l4.Fill(t.theta_phi_1)
+        l5.Fill(t.theta_phi_2)
+    if t.mc16d_trigger[0]==1 or t.mc16d_trigger[1]==1 or t.mc16d_trigger[2]==1:
+        m1.Fill(t.theta_x)
+        m2.Fill(t.phi_1)
+        m3.Fill(t.phi_2)
+        m4.Fill(t.theta_phi_1)
+        m5.Fill(t.theta_phi_2)
+    if t.mc16e_trigger[0]==1 or t.mc16e_trigger[1]==1:
+        n1.Fill(t.theta_x)
+        n2.Fill(t.phi_1)
+        n3.Fill(t.phi_2)
+        n4.Fill(t.theta_phi_1)
+        n5.Fill(t.theta_phi_2)
+
+outFile = ROOT.TFile.Open(outpath,'UPDATE')
+outFile.cd()
+h1.Write(h1.GetName(),ROOT.TObject.kOverwrite)
+h2.Write(h2.GetName(),ROOT.TObject.kOverwrite)
+h3.Write(h3.GetName(),ROOT.TObject.kOverwrite)
+h4.Write(h4.GetName(),ROOT.TObject.kOverwrite)
+h5.Write(h5.GetName(),ROOT.TObject.kOverwrite)
+i1.Write(i1.GetName(),ROOT.TObject.kOverwrite)
+i2.Write(i2.GetName(),ROOT.TObject.kOverwrite)
+i3.Write(i3.GetName(),ROOT.TObject.kOverwrite)
+i4.Write(i4.GetName(),ROOT.TObject.kOverwrite)
+i5.Write(i5.GetName(),ROOT.TObject.kOverwrite)
+j1.Write(j1.GetName(),ROOT.TObject.kOverwrite)
+j2.Write(j2.GetName(),ROOT.TObject.kOverwrite)
+j3.Write(j3.GetName(),ROOT.TObject.kOverwrite)
+j4.Write(j4.GetName(),ROOT.TObject.kOverwrite)
+j5.Write(j5.GetName(),ROOT.TObject.kOverwrite)
+k1.Write(k1.GetName(),ROOT.TObject.kOverwrite)
+k2.Write(k2.GetName(),ROOT.TObject.kOverwrite)
+k3.Write(k3.GetName(),ROOT.TObject.kOverwrite)
+k4.Write(k4.GetName(),ROOT.TObject.kOverwrite)
+k5.Write(k5.GetName(),ROOT.TObject.kOverwrite)
+l1.Write(l1.GetName(),ROOT.TObject.kOverwrite)
+l2.Write(l2.GetName(),ROOT.TObject.kOverwrite)
+l3.Write(l3.GetName(),ROOT.TObject.kOverwrite)
+l4.Write(l4.GetName(),ROOT.TObject.kOverwrite)
+l5.Write(l5.GetName(),ROOT.TObject.kOverwrite)
+m1.Write(m1.GetName(),ROOT.TObject.kOverwrite)
+m2.Write(m2.GetName(),ROOT.TObject.kOverwrite)
+m3.Write(m3.GetName(),ROOT.TObject.kOverwrite)
+m4.Write(m4.GetName(),ROOT.TObject.kOverwrite)
+m5.Write(m5.GetName(),ROOT.TObject.kOverwrite)
+n1.Write(n1.GetName(),ROOT.TObject.kOverwrite)
+n2.Write(n2.GetName(),ROOT.TObject.kOverwrite)
+n3.Write(n3.GetName(),ROOT.TObject.kOverwrite)
+n4.Write(n4.GetName(),ROOT.TObject.kOverwrite)
+n5.Write(n5.GetName(),ROOT.TObject.kOverwrite)
+outFile.Close()
+f.Close()
+
+
+
+
+
+
